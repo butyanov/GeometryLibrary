@@ -1,5 +1,5 @@
-using GeometryLibrary.Interfaces;
 using GeometryLibrary.Shapes;
+using GeometryLibrary1.Abstractions;
 
 namespace GeometryLibrary.UnitTests;
 
@@ -11,13 +11,10 @@ public class TriangleTests
     [InlineData(5, 7, 8, 17.320508075688775)]  // Проверка площади произвольного треугольника
     public void CalculateArea_ShouldReturnCorrectArea(double sideA, double sideB, double sideC, double expectedArea)
     {
-        // Arrange
-        IShape triangle = new Triangle(sideA, sideB, sideC);
-
-        // Act
+        Shape triangle = new Triangle(sideA, sideB, sideC);
+        
         var actualArea = ShapeCalcUtility.CalculateArea(triangle);
-
-        // Assert
+        
         Assert.Equal(expectedArea, actualArea, precision: 10);
     }
     
@@ -29,13 +26,10 @@ public class TriangleTests
     [InlineData(7, 7, 10, false)]     // непрямоугольный треугольник
     public void IsRightAngled_ReturnsCorrectResult(double sideA, double sideB, double sideC, bool expectedIsRightAngled)
     {
-        // Arrange
         var triangle = new Triangle(sideA, sideB, sideC);
-
-        // Act
+        
         var actualIsRightAngled = triangle.IsRightAngled();
-
-        // Assert
+        
         Assert.Equal(expectedIsRightAngled, actualIsRightAngled);
     }
 }

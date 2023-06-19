@@ -1,20 +1,24 @@
-using GeometryLibrary.Interfaces;
+using GeometryLibrary.Types;
+using GeometryLibrary1.Abstractions;
 
 namespace GeometryLibrary.Shapes;
-public class Triangle : IShape
+public sealed class Triangle : Shape
 {
+    private Lazy<double[]> SortedSidesFactory => new (SortSidesAscending);
+    public double[] SortedSides => SortedSidesFactory.Value; 
     public double SideA { get; set; }
     public double SideB { get; set; }
     public double SideC { get; set; }
+    
 
     public Triangle(double sideA, double sideB, double sideC)
     {
-        SideA = sideA;
-        SideB = sideB;
-        SideC = sideC;
+        SideA =  new Measure(sideA).Value;
+        SideB = new Measure(sideB).Value;
+        SideC = new Measure(sideC).Value;
     }
 
-    public double CalculateArea()
+    public override double CalculateArea()
     {
         var semiptr = (SideA + SideB + SideC) / 2;
         var square = Math.Sqrt(semiptr * (semiptr - SideA) * (semiptr - SideB) * (semiptr - SideC));
@@ -22,16 +26,14 @@ public class Triangle : IShape
         return square;
     }
 
-    public bool IsRightAngled()
+    public bool IsRightAngled(double epsilon = double.Epsilon)
     {
-        double[] sides = { SideA, SideB, SideC };
-        
-        Array.Sort(sides); 
+        var aSquare = SortedSides[0] * SortedSides[0];
+        var bSquare = SortedSides[1] * SortedSides[1];
+        var cSquare = SortedSides[2] * SortedSides[2];
 
-        var aSquare = sides[0] * sides[0];
-        var bSquare = sides[1] * sides[1];
-        var cSquare = sides[2] * sides[2];
-
-        return Math.Abs(aSquare + bSquare - cSquare) < double.Epsilon;
+        return Math.Abs(aSquare + bSquare - cSquare) < epsilon;
     }
+
+    private double[] SortSidesAscending() => new[] { SideA, SideB, SideC }.OrderBy(x => x).ToArray();
 }

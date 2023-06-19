@@ -1,8 +1,8 @@
-using GeometryLibrary.Interfaces;
+using GeometryLibrary1.Abstractions;
 
 namespace GeometryLibrary;
 
 public static class ShapeCalcUtility
 {
-    public static double CalculateArea(IShape shape) => shape.CalculateArea();
+    public static double CalculateArea(Shape shape) => shape.CalculateArea();
 }
