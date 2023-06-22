@@ -17,15 +17,17 @@ public readonly struct Measure
 
     public override int GetHashCode() => Value.GetHashCode();
     
-    public static bool operator ==(Measure left, Measure right)
-    {
-        return left.Equals(right);
-    }
+    public static bool operator ==(Measure left, Measure right) => left.Equals(right);
+    
+    public static bool operator !=(Measure left, Measure right) => !(left == right);
+    
+    public static bool operator >(Measure left, Measure right) => left.CompareTo(right) > 0;
 
-    public static bool operator !=(Measure left, Measure right)
-    {
-        return !(left == right);
-    }
+    public static bool operator <(Measure left, Measure right) => left.CompareTo(right) < 0;
+
+    public static bool operator >=(Measure left, Measure right) => left.CompareTo(right) >= 0;
+
+    public static bool operator <=(Measure left, Measure right) => left.CompareTo(right) <= 0;
     
     private static void ValidateValue(double value, string paramName = "") {
         switch (value) {

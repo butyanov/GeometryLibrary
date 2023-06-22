@@ -5,13 +5,13 @@ namespace GeometryLibrary.Shapes;
 
 public class Circle : Shape
 {
-    public double Radius { get; set; }
+    public Measure Radius { get; set; }
 
     public Circle(double radius)
     {
-        Radius = new Measure(radius).Value;
+        Radius = new Measure(radius);
     }
 
-    public override double CalculateArea() => Math.PI * Math.Pow(Radius, 2);
+    public override double CalculateArea() => Math.PI * Radius.Value * Radius.Value;
    
 }
