@@ -1,4 +1,5 @@
 using GeometryLibrary.Shapes;
+using GeometryLibrary.Types;
 using GeometryLibrary1.Abstractions;
 
 namespace GeometryLibrary.UnitTests;
@@ -12,7 +13,7 @@ public class CircleTests
     public void CalculateArea_ReturnsCorrectArea(double radius, double expectedArea)
     {
         // Arrange
-        Shape circle = new Circle(radius);
+        Shape circle = new Circle(new Measure(radius));
 
         // Act
         var actualArea = ShapeCalcUtility.CalculateArea(circle);
